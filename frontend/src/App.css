@@ -1,0 +1,104 @@
+/* ─── Reset & Base ───────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f1f5f9; color: #1e293b; }
+
+/* ─── Layout ─────────────────────────────────── */
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+.main-content { flex: 1; padding: 2rem 1rem; }
+.container { max-width: 1200px; margin: 0 auto; }
+.layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+
+/* ─── Header ─────────────────────────────────── */
+.header { background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%); color: white; padding: 1rem 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+.logo { display: flex; align-items: center; gap: 1rem; }
+.logo-icon { font-size: 2.2rem; }
+.logo-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.5px; }
+.logo-subtitle { font-size: 0.8rem; opacity: 0.8; margin-top: 2px; }
+.header-badge { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.badge { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); }
+.badge.ml { background: rgba(245,158,11,0.3); border-color: #f59e0b; }
+
+/* ─── Form Card ──────────────────────────────── */
+.form-card { background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.07); overflow: hidden; }
+.form-header { padding: 1.5rem; background: linear-gradient(135deg, #f8fafc, #e0f2fe); border-bottom: 1px solid #e2e8f0; }
+.form-header h2 { font-size: 1.25rem; font-weight: 700; color: #1e3a5f; }
+.form-header p { font-size: 0.85rem; color: #64748b; margin-top: 4px; }
+
+/* ─── Section Tabs ───────────────────────────── */
+.section-tabs { display: flex; border-bottom: 1px solid #e2e8f0; }
+.tab-btn { flex: 1; padding: 0.75rem 0.5rem; border: none; background: transparent; cursor: pointer; font-size: 0.78rem; font-weight: 600; color: #64748b; transition: all 0.2s; }
+.tab-btn.active { color: #2563eb; border-bottom: 3px solid #2563eb; background: #eff6ff; }
+.tab-btn:hover:not(.active) { background: #f8fafc; }
+
+/* ─── Fields ─────────────────────────────────── */
+.fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.5rem 1.5rem 1rem; }
+@media (max-width: 600px) { .fields-grid { grid-template-columns: 1fr; } }
+.field-group { display: flex; flex-direction: column; gap: 4px; }
+.field-label { font-size: 0.8rem; font-weight: 600; color: #374151; }
+.field-tip { font-size: 0.7rem; color: #94a3b8; font-style: italic; }
+.field-input { padding: 8px 12px; border: 1.5px solid #d1d5db; border-radius: 8px; font-size: 0.9rem; color: #1e293b; transition: border-color 0.2s; }
+.field-input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+
+/* ─── Model Selector ─────────────────────────── */
+.model-selector { padding: 0 1.5rem 1rem; }
+.model-options { display: flex; gap: 1rem; margin-top: 0.5rem; }
+.model-option { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.2s; }
+.model-option input { display: none; }
+.model-option.selected { border-color: #2563eb; background: #eff6ff; }
+.model-name { font-size: 0.82rem; font-weight: 700; color: #374151; }
+.model-acc { font-size: 0.7rem; color: #22c55e; font-weight: 600; }
+
+/* ─── Form Actions ───────────────────────────── */
+.form-actions { display: flex; gap: 1rem; padding: 1rem 1.5rem 1.5rem; }
+.btn-primary { flex: 2; padding: 0.85rem; background: linear-gradient(135deg, #1e3a5f, #2563eb); color: white; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s, transform 0.1s; }
+.btn-primary:hover:not(:disabled) { opacity: 0.92; transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-secondary { flex: 1; padding: 0.85rem; background: #f1f5f9; color: #64748b; border: 1.5px solid #d1d5db; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+.btn-secondary:hover { background: #e2e8f0; }
+
+/* ─── Result Card ────────────────────────────── */
+.result-card { background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.07); border: 2px solid #e2e8f0; overflow: hidden; }
+.result-header { padding: 1.5rem; text-align: center; }
+.score-badge { display: inline-block; padding: 6px 20px; border-radius: 20px; color: white; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; }
+.model-info { font-size: 0.78rem; color: #64748b; margin-top: 0.5rem; }
+.result-section-title { padding: 0.75rem 1.5rem 0.25rem; font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; border-top: 1px solid #f1f5f9; }
+
+/* ─── Score Gauge ────────────────────────────── */
+.gauge-container { display: flex; justify-content: center; }
+
+/* ─── Probabilities ──────────────────────────── */
+.prob-grid { display: flex; gap: 0.75rem; padding: 0.75rem 1.5rem; }
+.prob-badge { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 0.75rem; border: 2px solid; border-radius: 12px; }
+.prob-icon { font-size: 1.2rem; }
+.prob-label { font-size: 0.8rem; font-weight: 700; }
+.prob-value { font-size: 1.1rem; font-weight: 800; color: #1e293b; }
+
+/* ─── Breakdown Bars ─────────────────────────── */
+.breakdown-list { padding: 0.5rem 1.5rem; }
+.breakdown-bar { display: flex; align-items: center; gap: 0.75rem; margin: 0.4rem 0; }
+.breakdown-label { width: 90px; font-size: 0.78rem; font-weight: 600; color: #374151; flex-shrink: 0; }
+.bar-track { flex: 1; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+.breakdown-value { width: 30px; font-size: 0.78rem; font-weight: 700; color: #374151; text-align: right; }
+
+/* ─── Recommendations ────────────────────────── */
+.recs-list { list-style: none; padding: 0.5rem 1.5rem; }
+.rec-item { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.4rem 0; font-size: 0.84rem; color: #374151; }
+.rec-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+
+/* ─── Loan Box ───────────────────────────────── */
+.loan-box { margin: 0.75rem 1.5rem 1.5rem; padding: 0.9rem 1rem; border: 2px solid; border-radius: 10px; font-size: 0.84rem; line-height: 1.5; }
+
+/* ─── Placeholder ────────────────────────────── */
+.placeholder-card { background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.07); padding: 3rem 2rem; text-align: center; border: 2px dashed #e2e8f0; }
+.placeholder-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+.placeholder-card h3 { font-size: 1.3rem; color: #374151; margin-bottom: 0.5rem; }
+.placeholder-card p { color: #64748b; font-size: 0.9rem; line-height: 1.6; }
+
+/* ─── Error ──────────────────────────────────── */
+.error-card { background: #fef2f2; border: 2px solid #fecaca; border-radius: 12px; padding: 1rem 1.5rem; color: #ef4444; font-weight: 600; margin-bottom: 1rem; }
+
+/* ─── Footer ─────────────────────────────────── */
+.footer { background: #1e293b; color: #94a3b8; text-align: center; padding: 1rem; font-size: 0.78rem; }

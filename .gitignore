@@ -1,0 +1,124 @@
+# Operating system files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Editor and IDE files
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+.vs/
+*.swp
+*.swo
+*.swn
+*~
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+*.local
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.pid
+*.seed
+
+# Temporary files and caches
+*.tmp
+*.temp
+tmp/
+temp/
+.cache/
+.eslintcache
+.parcel-cache/
+.vite/
+
+# Node / React dependencies
+node_modules/
+.pnp/
+.pnp.js
+.pnpm-store/
+.npm/
+
+# Frontend build output
+build/
+dist/
+out/
+.next/
+.cache-loader/
+
+# JavaScript test coverage
+coverage/
+.nyc_output/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+*.pyo
+.mypy_cache/
+.ruff_cache/
+.pyre/
+
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+pyvenv.cfg
+
+# Python testing and coverage
+.pytest_cache/
+.tox/
+.nox/
+htmlcov/
+.coverage
+.coverage.*
+
+# Python packaging output
+*.egg-info/
+.eggs/
+*.egg
+pip-wheel-metadata/
+
+# Flask / local app state
+instance/
+.webassets-cache
+.flaskenv
+
+# Jupyter notebooks cache
+.ipynb_checkpoints/
+
+# ML models and generated artifacts
+models/*.pkl
+models/*.joblib
+models/*.h5
+models/*.keras
+models/*.onnx
+ml_pipeline/feature_importance.png
+ml_pipeline/outputs/
+ml_pipeline/artifacts/
+
+# Local datasets - uncomment if these should stay out of Git
+# data.csv
+# *.csv
+# *.parquet
+# *.feather
+
+# Misc generated backups
+*.bak
+*.orig
