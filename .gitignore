@@ -109,6 +109,12 @@ models/*.joblib
 models/*.h5
 models/*.keras
 models/*.onnx
+!models/features.pkl
+!models/linear_model.pkl
+!models/lr_model.pkl
+!models/meta.pkl
+!models/rf_model.pkl
+!models/scaler.pkl
 ml_pipeline/feature_importance.png
 ml_pipeline/outputs/
 ml_pipeline/artifacts/
