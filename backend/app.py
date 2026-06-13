@@ -179,7 +179,12 @@ def model_info():
         'models': ['Random Forest', 'Logistic Regression', 'Linear Regression'],
         'rf_accuracy': round(meta.get('rf_accuracy', 0.85) * 100, 2),
         'lr_accuracy': round(meta.get('lr_accuracy', 0.95) * 100, 2),
+        'rf_r2': round(meta.get('rf_r2', 0) * 100, 2),
+        'rf_mae': round(meta.get('rf_mae', 0), 2),
+        'lr_r2': round(meta.get('lr_r2', 0) * 100, 2),
+        'lr_mae': round(meta.get('lr_mae', 0), 2),
         'linear_r2': round(meta.get('linear_r2', 0) * 100, 2),
+        'linear_mae': round(meta.get('linear_mae', 0), 2),
         'features': FEATURES,
         'score_thresholds': {'low': 33, 'medium': 66},
         'scoring_weights': WEIGHTS

@@ -14,6 +14,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
+
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
@@ -126,9 +127,10 @@ FEATURES = [
 
 X = df[FEATURES]
 y = df['stability_label']
+y_score = df['computed_score']
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
+X_train, X_test, y_train, y_test, y_score_train, y_score_test = train_test_split(
+    X, y, y_score, test_size=0.2, random_state=42, stratify=y
 )
 
 print(f"\n  Train size: {len(X_train)}  |  Test size: {len(X_test)}")
@@ -139,10 +141,20 @@ X_train_s = scaler.fit_transform(X_train.to_numpy())
 X_test_s  = scaler.transform(X_test.to_numpy())
 
 
+
+
 # ─────────────────────────────────────────────────
 # 6. TRAIN MODELS
 # ─────────────────────────────────────────────────
 print("\nSTEP 4: Training Models")
+
+class_score_map = y_score_train.groupby(y_train).mean().to_dict()
+
+def expected_score_from_proba(model, probabilities):
+    return np.array([
+        sum(prob * class_score_map[label] for label, prob in zip(model.classes_, row))
+        for row in probabilities
+    ])
 
 # --- Random Forest ---
 print("\n  Training Random Forest...")
@@ -157,8 +169,13 @@ rf_model.fit(X_train_s, y_train)
 rf_pred   = rf_model.predict(X_test_s)
 rf_acc    = accuracy_score(y_test, rf_pred)
 rf_cv     = cross_val_score(rf_model, X_train_s, y_train, cv=5).mean()
+rf_score_pred = expected_score_from_proba(rf_model, rf_model.predict_proba(X_test_s))
+rf_r2 = r2_score(y_score_test, rf_score_pred)
+rf_mae = mean_absolute_error(y_score_test, rf_score_pred)
 print(f"  RF  Test Accuracy:  {rf_acc:.4f}")
 print(f"  RF  CV-5 Accuracy:  {rf_cv:.4f}")
+print(f"  RF  R2:             {rf_r2:.4f}")
+print(f"  RF  MAE:            {rf_mae:.4f}")
 print(classification_report(y_test, rf_pred))
 
 # --- Logistic Regression ---
@@ -168,15 +185,18 @@ lr_model.fit(X_train_s, y_train)
 lr_pred  = lr_model.predict(X_test_s)
 lr_acc   = accuracy_score(y_test, lr_pred)
 lr_cv    = cross_val_score(lr_model, X_train_s, y_train, cv=5).mean()
+lr_score_pred = expected_score_from_proba(lr_model, lr_model.predict_proba(X_test_s))
+lr_r2 = r2_score(y_score_test, lr_score_pred)
+lr_mae = mean_absolute_error(y_score_test, lr_score_pred)
 print(f"  LR  Test Accuracy:  {lr_acc:.4f}")
 print(f"  LR  CV-5 Accuracy:  {lr_cv:.4f}")
+print(f"  LR  R2:             {lr_r2:.4f}")
+print(f"  LR  MAE:            {lr_mae:.4f}")
 print(classification_report(y_test, lr_pred))
 
 
 # --- Linear Regression ---
 print("  Training Linear Regression...")
-
-y_score = df['computed_score']
 
 X_train_reg, X_test_reg, y_train_reg, y_test_reg = train_test_split(
     X,
@@ -231,7 +251,12 @@ meta = {
     'weights': WEIGHTS,
     'rf_accuracy': rf_acc,
     'lr_accuracy': lr_acc,
+    'rf_r2': rf_r2,
+    'rf_mae': rf_mae,
+    'lr_r2': lr_r2,
+    'lr_mae': lr_mae,
     'linear_r2': linear_r2,
+    'linear_mae': linear_mae,
     'features': FEATURES
 }
 
@@ -243,9 +268,9 @@ with open(os.path.join(MODELS_DIR, "features.pkl"),  'wb') as f: pickle.dump(FEA
 with open(os.path.join(MODELS_DIR, "meta.pkl"),      'wb') as f: pickle.dump(meta, f)
 
 print("\nSTEP 5: Models Saved -> ../models/")
-print(f"  rf_model.pkl  (Accuracy: {rf_acc:.2%})")
-print(f"  lr_model.pkl  (Accuracy: {lr_acc:.2%})")
-print(f"  linear_model.pkl  (R2: {linear_r2:.2%})")
+print(f"  rf_model.pkl  (Accuracy: {rf_acc:.2%}, R2: {rf_r2:.2%}, MAE: {rf_mae:.2f})")
+print(f"  lr_model.pkl  (Accuracy: {lr_acc:.2%}, R2: {lr_r2:.2%}, MAE: {lr_mae:.2f})")
+print(f"  linear_model.pkl  (R2: {linear_r2:.2%}, MAE: {linear_mae:.2f})")
 print(f"  scaler.pkl    (StandardScaler)")
 print(f"  features.pkl  (Feature list)")
 print(f"  meta.pkl      (Thresholds & weights)")

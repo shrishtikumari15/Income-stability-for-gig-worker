@@ -50,9 +50,16 @@ const FIELD_CONFIG = [
   },
 ];
 
-export default function PredictionForm({ onSubmit, loading }) {
+export default function PredictionForm({ onSubmit, loading, modelInfo }) {
   const [form, setForm]         = useState(DEFAULTS);
   const [activeSection, setActiveSection] = useState(0);
+
+  const formatMetric = (r2Key, maeKey) => {
+    if (!modelInfo || modelInfo[r2Key] === undefined || modelInfo[maeKey] === undefined) {
+      return "R2 / MAE";
+    }
+    return `R2: ${modelInfo[r2Key]}% | MAE: ${modelInfo[maeKey]}`;
+  };
 
   const handleChange = (key, value) => {
     setForm((prev) => ({ ...prev, [key]: parseFloat(value) || value }));
@@ -112,9 +119,9 @@ export default function PredictionForm({ onSubmit, loading }) {
           <label className="field-label">🤖 Choose ML Model</label>
           <div className="model-options">
             {[
-              { value: "rf", label: "Random Forest", metric: "Acc: 85%" },
-              { value: "lr", label: "Logistic Regression", metric: "Acc: 95%" },
-              { value: "linear", label: "Linear Regression", metric: "R2 score" },
+              { value: "rf", label: "Random Forest", metric: formatMetric("rf_r2", "rf_mae") },
+              { value: "lr", label: "Logistic Regression", metric: formatMetric("lr_r2", "lr_mae") },
+              { value: "linear", label: "Linear Regression", metric: formatMetric("linear_r2", "linear_mae") },
             ].map((m) => (
               <label key={m.value} className={`model-option ${form.model === m.value ? "selected" : ""}`}>
                 <input

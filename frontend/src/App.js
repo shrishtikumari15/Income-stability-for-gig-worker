@@ -137,6 +137,14 @@ function App() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [modelInfo, setModelInfo] = useState(null);
+
+  React.useEffect(() => {
+    fetch(`${API_BASE}/api/model-info`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => setModelInfo(data))
+      .catch(() => setModelInfo(null));
+  }, []);
 
   const handleSubmit = async (formData) => {
     setLoading(true);
@@ -166,7 +174,7 @@ function App() {
           {activePage === "predict" && (
             <div className="layout">
               <section className="form-section">
-                <PredictionForm onSubmit={handleSubmit} loading={loading} />
+                <PredictionForm onSubmit={handleSubmit} loading={loading} modelInfo={modelInfo} />
               </section>
               <section className="result-section">
                 {error && (
